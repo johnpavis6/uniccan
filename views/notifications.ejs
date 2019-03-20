@@ -2,8 +2,9 @@
 
 <head>
     <title>Uniccan</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="/css/notifications.css"> -->
     <script src="/jquery.min.js"></script>
@@ -17,14 +18,38 @@
 <body ng-app="uniccan" ng-controller="notificationsCtrl">
     <% include header %>
     <div class="container">
+        <div ng-show="notifications.length">
+            <hr>
+            <div class="alert text-center alert-secondary">New Chats</div>
+        </div>
         <div class="card-deck">
             <a ng-repeat="user in notifications" href="/chat?email={{user._from}}" class="nav-link">
+                <div class="card border-primary">
+                    <div class="card-header border-primary">
+                        <div class="card-title">Name : {{user.name}}</div>
+                        <hr>
+                        <div class="card-title">New Messages : {{user.count}}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div ng-show="chats.length">
+            <hr>
+            <div class="alert text-center alert-secondary">Recent Chats</div>
+        </div>
+        <div class="card-deck">
+            <a ng-repeat="user in chats" href="/chat?email={{user.email}}" class="nav-link">
                 <div class="card border-primary">
                     <div class="card-header border-primary">
                         <div class="card-title">Name : {{user.name}}</div>
                     </div>
                 </div>
             </a>
+        </div>
+        <div ng-hide="chats.length||notifications.length">
+            <hr>
+            <div class="alert text-center alert-secondary">No Notifications</div>
+            <hr>
         </div>
     </div>
 </body>

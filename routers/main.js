@@ -12,6 +12,7 @@ app.get('/signin', function (req, res) {
     var resp = req.session.resp;
     req.session.resp = null;
     res.render('signin', {
+        user: {},
         resp: resp,
         redirect: req.query.redirect || '/',
     });
@@ -20,6 +21,7 @@ app.get('/signup', function (req, res) {
     var resp = req.session.resp;
     req.session.resp = null;
     res.render('signup', {
+        user: {},
         resp: resp,
         redirect: req.query.redirect || '/',
     });
@@ -48,6 +50,7 @@ app.get('/notifications', middleware.isLoggedIn, function (req, res) {
     });
 });
 
+app.get('/mychats', middleware.isLoggedIn, controller.mychats);
 app.get('/mynotifications', middleware.isLoggedIn, controller.mynotifications);
 
 app.get('/chat', middleware.isLoggedIn, function (req, res, next) {
@@ -58,7 +61,7 @@ app.get('/chat', middleware.isLoggedIn, function (req, res, next) {
     next();
 }, controller.chat);
 
-app.post('/set-socket-id', middleware.isLoggedIn, controller.setSocketID);
+app.post('/set-socket-id', middleware.isLoggedIn,middleware.setSocketID, controller.setSocketID);
 app.get('/get-messages', middleware.isLoggedIn, controller.getMessages);
 app.post('/message', middleware.isLoggedIn, middleware.insertMessage, controller.insertMessage);
 

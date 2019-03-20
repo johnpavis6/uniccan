@@ -2,6 +2,7 @@
 
 <head>
     <title>Uniccan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -15,11 +16,7 @@
 </head>
 
 <body ng-app="uniccan" ng-controller="profileCtrl">
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Uniccan</a>
-        </div>
-    </nav>
+    <% include header %>
     <div class="container">
         <form class="user-details" ng-submit="submitForm()">
             <input type="hidden" ng-model="data.id">
@@ -67,7 +64,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-group form-group col-6" ng-repeat="skill in data.skills track by $index">
+                <div class="input-group form-group col-lg-6 flex-nowrap" ng-repeat="skill in data.skills track by $index">
                     <div class="input-group-prepend">
                         <label for="skill-{{$index}}" class="input-group-text">{{$index+1}}</label>
                     </div>
@@ -86,7 +83,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-group form-group col-6" ng-repeat="hobbie in data.hobbies track by $index">
+                <div class="input-group form-group col-lg-6 flex-nowrap" ng-repeat="hobbie in data.hobbies track by $index">
                     <div class="input-group-prepend">
                         <label for="hobbie-{{$index}}" class="input-group-text">{{$index+1}}</label>
                     </div>
@@ -107,7 +104,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-group form-group col-6" ng-repeat="extra_curricular_activity in data.extra_curricular_activities track by $index">
+                <div class="input-group form-group col-lg-6 flex-nowrap" ng-repeat="extra_curricular_activity in data.extra_curricular_activities track by $index">
                     <div class="input-group-prepend">
                         <label for="extra_curricular_activity-{{$index}}" class="input-group-text">{{$index+1}}</label>
                     </div>

@@ -1,3 +1,27 @@
+drop table messages;
+create table messages(
+    id integer AUTO_INCREMENT primary key not null,
+    _from varchar(100) not null,
+    _to varchar(100) not null,
+    message text not null,
+    datetime text not null,
+    seenstatus int(1) not null,
+    foreign key(_from) references users(email),
+    foreign key(_to) references users(email)
+);
+
+drop table socket_mapping;
+create table socket_mapping(
+    id integer AUTO_INCREMENT primary key not null,
+    email varchar(100),
+    socketID varchar(100),
+    talking_with varchar(100),
+    unique(email,talking_with),
+    foreign key(email) references users(email),
+    foreign key(talking_with) references users(email)
+);
+
+drop table users;
 create table users(
     id integer AUTO_INCREMENT primary key not null,
     name text not null,
@@ -14,21 +38,8 @@ create table users(
     extra_curricular_activities text,
     involvements text,
     skills text,
-    socketID text,
     last_seen text
 );
 
-ALTER TABLE users AUTO_INCREMENT=100;
-
-create table messages(
-    id integer AUTO_INCREMENT primary key not null,
-    _from varchar(100) not null,
-    _to varchar(100) not null,
-    message text not null,
-    datetime text not null,
-    seen_status int(1) not null,
-    foreign key(_from) references users(email),
-    foreign key(_to) references users(email)
-);
-
-ALTER TABLE messages AUTO_INCREMENT=1;
+delete from socket_mapping;
+update users set last_seen=CURRENT_TIMESTAMP() where last_seen="online";

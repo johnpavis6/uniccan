@@ -7,8 +7,10 @@ module.exports.signin = function (req, res) {
     connection.query('select * from users where email=?',
         [req.data.email],
         function (err, results) {
-            if (err || !results || !results.length) {
+            if (err) {
                 console.log('ERR : ', err);
+            }
+            if (!results || !results.length) {
                 req.session.resp = {
                     code: 1,
                     message: 'Invalid Email'
@@ -18,6 +20,7 @@ module.exports.signin = function (req, res) {
             }
             var flag = bcrypt.compareSync(req.data.password, results[0].password);
             if (flag) {
+                delete results[0]['password'];
                 req.session.user = results[0];
                 res.redirect(req.body.redirect);
                 return;
@@ -40,12 +43,13 @@ module.exports.signup = function (req, res) {
                 console.log('ERR : ', err);
                 req.session.resp = {
                     code: 1,
-                    message: err.code,
+                    message: 'Email or Mobile No already Exists',
                 };
                 res.redirect('/signup');
                 return;
             }
             data.id = result.insertId;
+            delete data['password'];
             req.session.user = data;
             res.redirect('/');
         });
@@ -85,13 +89,24 @@ module.exports.search = function (req, res) {
 }
 
 module.exports.mynotifications = function (req, res) {
-    connection.query('select name,_from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 group by _from',
+    connection.query('select name,_from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 and _to=? group by _from',
         [req.session.user.email],
         function (err, results) {
             if (err) {
                 console.log(err);
             }
             console.log('New Messages : ', results);
+            res.json(results);
+        })
+}
+module.exports.mychats = function (req, res) {
+    var email = req.session.user.email;
+    connection.query('select distinct _from as email,name from messages as a,users as b where email=_from and _to=? union select distinct _to as email,name from messages as a,users as b where email=_to and _from=?;',
+        [email, email],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            }
             res.json(results);
         })
 }
@@ -112,7 +127,8 @@ module.exports.chat = function (req, res) {
                 receiver: results[0]
             });
         });
-    connection.query('update messages users set seenstatus=1 where _to=?', [req.session.user.email],
+    connection.query('update messages users set seenstatus=1 where _from=? and _to=?',
+        [req.query.email, req.session.user.email],
         (err, results) => {
             if (err) {
                 console.log(err);
@@ -121,8 +137,8 @@ module.exports.chat = function (req, res) {
 }
 
 module.exports.setSocketID = function (req, res) {
-    connection.query('update users set socketID=?, last_seen="online" where email=?',
-        [req.body.socketID, req.session.user.email],
+    connection.query('insert into socket_mapping set ? on duplicate key update ?',
+        [req.data, req.data],
         function (err, results) {
             if (err) {
                 console.log('ERR : ', err);
@@ -131,6 +147,13 @@ module.exports.setSocketID = function (req, res) {
                 });
                 return;
             }
+            connection.query('update users set last_seen="online" where email=?',
+                [req.data.email],
+                function (err, results) {
+                    if (err) {
+                        console.log('ERR : ', err);
+                    }
+                });
             res.json({
                 code: 1
             });
@@ -138,19 +161,22 @@ module.exports.setSocketID = function (req, res) {
 }
 
 module.exports.getMessages = function (req, res) {
-    var email = req.session.user.email;
-    console.log('Email : ', email);
-    connection.query('select * from messages where _from=? or _to=?',
-        [email, email],
+    var email = req.session.user.email,
+        cemail = req.query._from;
+    connection.query('select * from messages where (_from=? and _to=?) or (_from=? and _to=?)',
+        [email, cemail, cemail, email],
         function (err, results) {
             // console.log('Messages : ', results);
             res.json(results);
         });
 }
 module.exports.insertMessage = function (req, res) {
-    connection.query('select socketID from users where email=? and last_seen="online"',
-        [req.data._to],
+    connection.query('select socketID from socket_mapping where email=? and talking_with=?',
+        [req.data._to, req.session.user.email],
         (err, results) => {
+            if (err) {
+                console.log(err);
+            }
             req.data.seenstatus = 1;
             if (!results || !results.length) {
                 req.data.seenstatus = 0;
@@ -163,26 +189,30 @@ module.exports.insertMessage = function (req, res) {
                     res.sendStatus(400);
                     return;
                 }
-                res.sendStatus(200);
+                res.json(req.data);
+
             });
             results.forEach(user => {
-                var data = {
-                    message: req.data.message,
-                    _from: req.session.user.email
-                };
-                io.to(user.socketID).emit('messages', JSON.stringify(data));
+                io.to(user.socketID).emit('messages', JSON.stringify(req.data));
             })
         })
 }
 io.on('connection', (socket) => {
     socket.on('disconnect', () => {
-        connection.query('update users set last_seen=? where socketID=?',
-            [new Date().toString(), socket.id],
+        connection.query('update users set last_seen=? where email in (select email from socket_mapping where socketID=? group by email having count(email)=1)',
+            [new Date().toString(), socket.id, socket.id],
             function (err, results) {
                 if (err) {
                     console.log('ERR : ', err);
                 }
-                console.log('Last seen update result : ', results);
             })
+        connection.query('delete from socket_mapping where socketID=?',
+            [socket.id],
+            function (err, results) {
+                if (err) {
+                    console.log('ERR : ', err);
+                }
+                // console.log('Last seen update result : ', results);
+            });
     })
 })
