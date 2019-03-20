@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <title>Uniccan</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/angular.min.js"></script>
+    <% for(key in user){ %>
+    <meta name="user-<%= key %>" content="<%= user[key] %>">
+    <% } %>
+</head>
+
+<body ng-app="uniccan" ng-controller="profileCtrl">
+    <% include header %>
+    <div class="container">
+        <div class="input-group search-group">
+            <input class="search-box border-primary form-control" type="text" name="q" ng-keyup="search()" autocomplete="off">
+            <div class="input-group-append search-btn">
+                <button class="btn btn-outline-primary"><i class="fas fa-search" ng-click="search()"></i></button>
+            </div>
+        </div>
+        <div class="card-deck">
+            <a ng-repeat="helper in helpers" href="/chat?email={{helper.email}}" class="nav-link">
+                <div class="card border-primary">
+                    <div class="card-header border-primary">
+                        <div class="card-title">Name : {{helper.name}}</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</body>
+<script src="/js/home.js"></script>
+
+</html>

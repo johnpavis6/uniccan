@@ -1,0 +1,188 @@
+var bcrypt = require('bcrypt');
+var saltRounds = 10;
+var connection = require('../db').connection;
+var io = require('../app').io;
+
+module.exports.signin = function (req, res) {
+    connection.query('select * from users where email=?',
+        [req.data.email],
+        function (err, results) {
+            if (err || !results || !results.length) {
+                console.log('ERR : ', err);
+                req.session.resp = {
+                    code: 1,
+                    message: 'Invalid Email'
+                };
+                res.redirect('/signin');
+                return;
+            }
+            var flag = bcrypt.compareSync(req.data.password, results[0].password);
+            if (flag) {
+                req.session.user = results[0];
+                res.redirect(req.body.redirect);
+                return;
+            }
+            req.session.resp = {
+                code: 1,
+                message: 'Invalid Password'
+            };
+            res.redirect('/signin');
+        })
+}
+
+module.exports.signup = function (req, res) {
+    var data = req.data;
+    data.password = bcrypt.hashSync(data.password, saltRounds);
+    connection.query('insert into users set ?',
+        [req.data],
+        function (err, result) {
+            if (err) {
+                console.log('ERR : ', err);
+                req.session.resp = {
+                    code: 1,
+                    message: err.code,
+                };
+                res.redirect('/signup');
+                return;
+            }
+            data.id = result.insertId;
+            req.session.user = data;
+            res.redirect('/');
+        });
+}
+
+module.exports.updateProfile = function (req, res) {
+    var data = req.data;
+    connection.query('update users set ? where id=?',
+        [req.data, req.data.id],
+        function (err, result) {
+            if (err) {
+                console.log('ERR : ', err);
+                res.status(400).json({
+                    code: 1,
+                    message: 'Update Error'
+                });
+                return;
+            }
+            req.session.user = data;
+            res.sendStatus(200);
+        });
+}
+
+module.exports.search = function (req, res) {
+    var q = req.body.q.trim();
+    if (!q || !q.length) {
+        res.json([]);
+        return;
+    }
+    var query = `select * from users where skills like '%${q}%'`;
+    connection.query(query, function (err, results) {
+        if (err) {
+            console.log('ERR : ', err);
+        }
+        res.json(results);
+    });
+}
+
+module.exports.mynotifications = function (req, res) {
+    connection.query('select name,_from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 group by _from',
+        [req.session.user.email],
+        function (err, results) {
+            if (err) {
+                console.log(err);
+            }
+            console.log('New Messages : ', results);
+            res.json(results);
+        })
+}
+
+module.exports.chat = function (req, res) {
+    connection.query('select * from users where email=?',
+        [req.query.email],
+        function (err, results) {
+            if (err) {
+                console.log('ERR : ', err);
+            }
+            if (!results || !results.length) {
+                res.redirect('/');
+                return;
+            }
+            res.render('chat', {
+                user: req.session.user,
+                receiver: results[0]
+            });
+        });
+    connection.query('update messages users set seenstatus=1 where _to=?', [req.session.user.email],
+        (err, results) => {
+            if (err) {
+                console.log(err);
+            }
+        })
+}
+
+module.exports.setSocketID = function (req, res) {
+    connection.query('update users set socketID=?, last_seen="online" where email=?',
+        [req.body.socketID, req.session.user.email],
+        function (err, results) {
+            if (err) {
+                console.log('ERR : ', err);
+                res.json({
+                    code: 0
+                });
+                return;
+            }
+            res.json({
+                code: 1
+            });
+        });
+}
+
+module.exports.getMessages = function (req, res) {
+    var email = req.session.user.email;
+    console.log('Email : ', email);
+    connection.query('select * from messages where _from=? or _to=?',
+        [email, email],
+        function (err, results) {
+            // console.log('Messages : ', results);
+            res.json(results);
+        });
+}
+module.exports.insertMessage = function (req, res) {
+    connection.query('select socketID from users where email=? and last_seen="online"',
+        [req.data._to],
+        (err, results) => {
+            req.data.seenstatus = 1;
+            if (!results || !results.length) {
+                req.data.seenstatus = 0;
+            }
+            connection.query('insert into messages set ?', req.data, function (err, results) {
+                if (err) {
+                    if (err) {
+                        console.log('ERR : ', err);
+                    }
+                    res.sendStatus(400);
+                    return;
+                }
+                res.sendStatus(200);
+            });
+            results.forEach(user => {
+                var data = {
+                    message: req.data.message,
+                    _from: req.session.user.email
+                };
+                io.to(user.socketID).emit('messages', JSON.stringify(data));
+            })
+        })
+}
+io.on('connection', (socket) => {
+    socket.on('disconnect', () => {
+        connection.query('update users set last_seen=? where socketID=?',
+            [new Date().toString(), socket.id],
+            function (err, results) {
+                if (err) {
+                    console.log('ERR : ', err);
+                }
+                console.log('Last seen update result : ', results);
+            })
+    })
+})

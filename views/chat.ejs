@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <title>Uniccan</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <script src="/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/angular.min.js"></script>
+    <script src="/socket.io.js"></script>
+    <% for(key in user){ %>
+    <meta name="user-<%= key %>" content="<%= user[key] %>">
+    <% } %>
+    <% for(key in receiver){ %>
+    <meta for="receiver-detail" name="<%= key %>" content="<%= receiver[key] %>">
+    <% } %>
+</head>
+
+<body>
+    <% include header %>
+    <div class="container">
+        <div class="card border-primary main-card">
+            <div class="card-header border-primary">
+                <div class="card-title text-primary">
+                    <i class="fas fa-user"></i>
+                    <%= receiver.name %>
+                </div>
+            </div>
+            <div class="card-body" id="messages">
+            </div>
+            <div class="card-footer border-primary">
+                <form onsubmit="sendMessage();return false;" class="send-form">
+                    <div class="input-group send-btn-group">
+                        <input id="message" type="text" class="form-control" placeholder="Enter your message here..."
+                            autocomplete="off" autofocus>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button"><i class="fab fa-telegram-plane"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/chat.js"></script>
+
+</html>

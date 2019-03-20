@@ -1,0 +1,9 @@
+.user-details {
+    width: 60%;
+    margin: 3% auto;
+}
+
+.edit-btn,
+.edit-sel {
+    display: none;
+}

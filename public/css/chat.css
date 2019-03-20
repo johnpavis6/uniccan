@@ -1,0 +1,25 @@
+.main-card {
+    height: 80%;
+    margin: 20px;
+}
+
+.main-card .card-body {
+    overflow-y: auto;
+}
+
+.message-box {
+    width: 100%;
+}
+
+.message-box div {
+    display: inline-block;
+    margin: 5px;
+}
+
+.send-form {
+    margin: 0;
+}
+
+.send-btn-group {
+    padding: 0;
+}
