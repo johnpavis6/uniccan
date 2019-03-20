@@ -3,6 +3,7 @@
 <head>
     <title>Uniccan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/logo.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
         crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -15,7 +16,7 @@
     <% } %>
 </head>
 
-<body ng-app="uniccan" ng-controller="profileCtrl">
+<body ng-app="uniccan" ng-controller="profileCtrl" style="background-image: url(/images/bg.jpeg);background-size: 100% 100%;">
     <% include header %>
     <div class="container">
         <form class="user-details" ng-submit="submitForm()">
