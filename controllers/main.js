@@ -1,7 +1,6 @@
 var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var connection = require('../db').connection;
-var io = require('../app').io;
 
 module.exports.signin = function (req, res) {
     connection.query('select * from users where email=?',
