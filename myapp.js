@@ -27,7 +27,7 @@ app.use(express.static('./public/'))
 
 app.use('/', require('./routers/main'));
 
-http.listen(8080, function (err) {
+http.listen(4000, function (err) {
     if (err) { throw err; }
-    console.log('App runs on http://localhost:8080')
+    console.log('App runs on http://localhost:4000')
 });
