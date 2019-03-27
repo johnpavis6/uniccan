@@ -27,4 +27,7 @@ app.use(express.static('./public/'))
 
 app.use('/', require('./routers/main'));
 
-module.exports = http;
+http.listen(8888, function (err) {
+    if (err) { throw err; }
+    console.log('App runs on http://localhost:8888')
+});
