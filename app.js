@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var http = require('http').createServer(app)
+io = require('socket.io')(http);
 
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({
@@ -25,4 +27,4 @@ app.use(express.static('./public/'))
 
 app.use('/', require('./routers/main'));
 
-module.exports = app;
+module.exports = http;
