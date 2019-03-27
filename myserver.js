@@ -5,5 +5,7 @@ require('greenlock-express').create({
     communityMember: true,
     telemetry: true,
     approveDomains: ['uniccan.com', 'www.uniccan.com'],
-    app: require('./app.js')
+    app: function (req, res) {
+        require('./my-express-app.js')(req, res);
+    }
 }).listen(80, 443);
