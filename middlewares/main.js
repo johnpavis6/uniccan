@@ -83,8 +83,8 @@ module.exports.updateProfile = function (req, res, next) {
         education: xss(req.body.education),
         college_name: xss(req.body.college_name),
         work_experience: req.body.work_experience,
-        work_company_name: req.body.work_company_name,
-        work_position: req.body.work_position,
+        work_company_name: xss(req.body.work_company_name),
+        work_position: xss(req.body.work_position),
         skills: xss(JSON.stringify(req.body.skills || [])),
         hobbies: xss(JSON.stringify(req.body.hobbies || [])),
         extra_curricular_activities: xss(JSON.stringify(req.body.extra_curricular_activities || [])),
@@ -101,26 +101,6 @@ module.exports.updateProfile = function (req, res, next) {
         resp = {
             code: 1,
             message: 'Invalid DOB'
-        };
-    } else if (data.education && !data.education.length) {
-        resp = {
-            code: 1,
-            message: 'Invalid Education'
-        };
-    } else if (data.college_name && !data.college_name.length) {
-        resp = {
-            code: 1,
-            message: 'Invalid College'
-        };
-    } else if (data.work_company_name && !data.work_company_name.length) {
-        resp = {
-            code: 1,
-            message: 'Invalid Company Name'
-        };
-    } else if (data.work_position && !data.work_position.length) {
-        resp = {
-            code: 1,
-            message: 'Invalid Work Position'
         };
     } else if (!data.work_experience && !validator.isNumeric(`${data.work_experience}`)) {
         resp = {
