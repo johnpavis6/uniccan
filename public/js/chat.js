@@ -23,29 +23,30 @@ addMessage = function (data) {
     var html = '';
     if (!last.length) {
         html += `<div class="message-box d-flex justify-content-center date">
-<div class="input-group-text bg-secondary text-white">
-${now}</div></div>`
+                    <div class="input-group-text bg-secondary text-white">
+                        ${now}</div></div>`
     } else if (last.children('div').text().trim() != now) {
         html += `<div class="message-box d-flex justify-content-center date">
-<div class="input-group-text bg-secondary text-white">
-${now}</div></div>`
+                    <div class="input-group-text bg-secondary text-white">
+                        ${now}</div></div>`
     }
     $('#messages').append(html);
     html = `<div class="message-box d-flex ${(data._from==email)?'justify-content-end':''}">
-<div class="input-group-text text-left">
-${data.message}
-<br>
-<div class="text-muted small">${h}:${m} ${mm}</div>
-</div>
-</div>`;
+                <div class="input-group-text text-left">
+                    ${data.message}
+                    <br>
+                    <div class="text-muted small">${h}:${m} ${mm}</div>
+                </div>
+            </div>`;
     $('#messages').append(html);
 }
-scrollDown = function (time = 0) {
+function scrollDown(time = 0) {
     $("#messages").animate({
         scrollTop: $('#messages').prop("scrollHeight")
     }, time);
 }
-sendMessage = function () {
+
+function sendMessage() {
     var message = $('#message');
     var text = message.val();
     message.val('');
