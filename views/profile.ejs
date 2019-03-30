@@ -72,11 +72,11 @@
                 <div class="input-group-prepend">
                     <label for="college_name" class="input-group-text">College Name</i></label>
                 </div>
-                <select class="form-control" ng-model="data.college_name" id="college_name" name="college_name"
-                    ng-disabled="tag_disabled">
-                    <option style="display:none" value="">Select an College</option>
+                <input ng-model="data.college_name" id="college_name" name="college_name" class="form-control" type="text" placeholder="Eg : Anna University"
+                    ng-disabled="tag_disabled" list="college_names">
+                <datalist id="college_names">
                     <option ng-repeat="college in colleges track by $index">{{college}}</option>
-                </select>
+                </datalist>
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
