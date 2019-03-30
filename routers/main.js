@@ -3,11 +3,7 @@ var app = express.Router();
 var controller = require('../controllers/main');
 var middleware = require('../middlewares/main');
 
-app.get('/', function (req, res) {
-    res.render('home', {
-        user: req.session.user || {}
-    });
-});
+app.get('/', controller.home);
 app.get('/signin', function (req, res) {
     var resp = req.session.resp;
     req.session.resp = null;
@@ -61,7 +57,7 @@ app.get('/chat', middleware.isLoggedIn, function (req, res, next) {
     next();
 }, controller.chat);
 
-app.post('/set-socket-id', middleware.isLoggedIn,middleware.setSocketID, controller.setSocketID);
+app.post('/set-socket-id', middleware.isLoggedIn, middleware.setSocketID, controller.setSocketID);
 app.get('/get-messages', middleware.isLoggedIn, controller.getMessages);
 app.post('/message', middleware.isLoggedIn, middleware.insertMessage, controller.insertMessage);
 

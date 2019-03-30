@@ -4,8 +4,8 @@
     <title>Uniccan</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/images/logo.png">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/home.css">
     <script src="/jquery.min.js"></script>
@@ -16,15 +16,29 @@
     <% } %>
 </head>
 
-<body ng-app="uniccan" ng-controller="profileCtrl" style="background-image: url(/images/bg.jpeg);background-size: 100% 100%;">
+<body ng-app="uniccan" ng-controller="profileCtrl"
+    style="background-image: url(/images/bg.jpeg);background-size: 100% 100%;">
     <% include header %>
     <div class="container">
-        <div class="input-group search-group">
-            <input class="search-box border-primary form-control" type="text" name="q" ng-keyup="search()" autocomplete="off">
-            <div class="input-group-append search-btn">
-                <button class="btn btn-outline-primary"><i class="fas fa-search" ng-click="search()"></i></button>
+        <form ng-submit="search()">
+            <div class="input-group search-group">
+                <input class="search-box form-control" type="text" name="q" autocomplete="off" list="skills"
+                    placeholder="search by skills..." ng-keyup="filter()" ng-model="q">
+                <datalist id="skills"></datalist>
+                <template id="skill-set">
+                    <option>C++</option>
+                    <option>Java</option>
+                    <option>Python</option>
+                    <% skills.forEach(skill=>{ %>
+                    <option><%-skill %></option>
+                    <% }); %>
+                </template>
+                <div class="input-group-append search-btn">
+                    <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"
+                            ng-click="search()"></i></button>
+                </div>
             </div>
-        </div>
+        </form>
         <div class="card-deck">
             <a ng-repeat="helper in helpers" href="/chat?email={{helper.email}}" class="nav-link">
                 <div class="card border-primary">

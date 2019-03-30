@@ -2,6 +2,24 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var connection = require('../db').connection;
 
+module.exports.home = function (req, res) {
+    connection.query('select skills from users', function (err, results) {
+        var skills = new Set();
+        results.forEach(result => {
+            let ts = JSON.parse(result.skills || '[]');
+            ts.forEach(t => {
+                skills.add(t);
+            });
+        });
+        skills = Array.from(skills);
+        console.log(skills);
+        res.render('home', {
+            user: req.session.user || {},
+            skills: skills
+        });
+    });
+}
+
 module.exports.signin = function (req, res) {
     connection.query('select * from users where email=?',
         [req.data.email],
@@ -50,7 +68,7 @@ module.exports.signup = function (req, res) {
             data.id = result.insertId;
             delete data['password'];
             req.session.user = data;
-            res.redirect('/');
+            res.redirect('/profile');
         });
 }
 
@@ -67,7 +85,9 @@ module.exports.updateProfile = function (req, res) {
                 });
                 return;
             }
-            req.session.user = data;
+            for (key in data) {
+                req.session.user[key] = data[key];
+            }
             res.sendStatus(200);
         });
 }

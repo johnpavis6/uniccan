@@ -40,6 +40,8 @@ create table users(
     skills text,
     last_seen text
 );
+alter table users add column knowledges text;
+alter table users add column college_name text;
 
 delete from socket_mapping;
 update users set last_seen=CURRENT_TIMESTAMP() where last_seen="online";
