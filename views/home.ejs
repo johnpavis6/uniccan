@@ -22,15 +22,10 @@
     <div class="container">
         <form ng-submit="search()">
             <div class="input-group search-group">
-                <input class="search-box form-control" type="text" name="q" autocomplete="off" list="skills"
-                    placeholder="search by skills..." ng-model="q">
-                <datalist id="skills">
-                    <option>C++</option>
-                    <option>Java</option>
-                    <option>Python</option>
-                    <% skills.forEach(skill=>{ %>
-                    <option><%-skill %></option>
-                    <% }); %>
+                <input class="search-box form-control" type="text" name="q" autocomplete="off" list="suggestions"
+                    placeholder="search by name, college, company, skills, hobbies, knowledges..." ng-model="q">
+                <datalist id="suggestions">
+                    <option ng-repeat="suggestion in suggestions">{{suggestion}}</option>
                 </datalist>
                 <div class="input-group-append search-btn">
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"

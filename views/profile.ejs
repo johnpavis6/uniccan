@@ -30,19 +30,19 @@
             <input type="hidden" ng-model="data.id">
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="name" class="input-group-text">
+                    <label for="name" class="input-group-text ">
                         <i class="fas fa-user"></i>
                     </label>
                 </div>
-                <input ng-model="data.name" id="name" name="name" class="form-control" type="text" placeholder="Name"
+                <input ng-model="data.name" id="name" name="name" class="form-control bg-white" type="text" placeholder="Name"
                     ng-disabled="tag_disabled">
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="gender" class="input-group-text"><i class="fas fa-male"></i><i
+                    <label for="gender" class="input-group-text "><i class="fas fa-male"></i><i
                             class="fas fa-female"></i></label>
                 </div>
-                <select class="form-control" ng-model="data.gender" id="gender" name="gender"
+                <select class="form-control bg-white" ng-model="data.gender" id="gender" name="gender"
                     ng-disabled="tag_disabled">
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -51,16 +51,16 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="dob" class="input-group-text">Date Of Birth : </label>
+                    <label for="dob" class="input-group-text ">Date Of Birth : </label>
                 </div>
-                <input ng-model="data.dob" id="dob" name="dob" class="form-control" type="date"
+                <input ng-model="data.dob" id="dob" name="dob" class="form-control bg-white" type="date"
                     placeholder="Date of Birth" ng-disabled="tag_disabled">
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="education" class="input-group-text"><i class="fas fa-university"></i></label>
+                    <label for="education" class="input-group-text "><i class="fas fa-university"></i></label>
                 </div>
-                <select class="form-control" ng-model="data.education" id="education" name="education"
+                <select class="form-control bg-white" ng-model="data.education" id="education" name="education"
                     ng-disabled="tag_disabled">
                     <option style="display:none" value="">Select an education</option>
                     <option value="school">School</option>
@@ -70,9 +70,9 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="college_name" class="input-group-text">College Name</i></label>
+                    <label for="college_name" class="input-group-text ">College Name</i></label>
                 </div>
-                <input ng-model="data.college_name" id="college_name" name="college_name" class="form-control" type="text" placeholder="Eg : Anna University"
+                <input ng-model="data.college_name" id="college_name" name="college_name" class="form-control bg-white" type="text" placeholder="Eg : Anna University"
                     ng-disabled="tag_disabled" list="college_names">
                 <datalist id="college_names">
                     <option ng-repeat="college in colleges track by $index">{{college}}</option>
@@ -80,39 +80,39 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="work_experience" class="input-group-text">
+                    <label for="work_experience" class="input-group-text ">
                         Work Experience :
                     </label>
                 </div>
-                <input ng-model="data.work_experience" id="work_experience" name="work_experience" class="form-control"
+                <input ng-model="data.work_experience" id="work_experience" name="work_experience" class="form-control bg-white"
                     type="number" placeholder="Eg : 12" ng-disabled="tag_disabled" min="1">
                 <div class="input-group-append">
-                    <label for="work_experience" class="input-group-text">
+                    <label for="work_experience" class="input-group-text ">
                         Months
                     </label>
                 </div>
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="work_experience" class="input-group-text">
+                    <label for="work_experience" class="input-group-text ">
                         Company Name :
                     </label>
                 </div>
                 <input ng-model="data.work_company_name" id="work_company_name" name="work_company_name"
-                    class="form-control" type="text" placeholder="Eg : Zoho" ng-disabled="tag_disabled">
+                    class="form-control bg-white" type="text" placeholder="Eg : Zoho" ng-disabled="tag_disabled">
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="work_experience" class="input-group-text">
+                    <label for="work_experience" class="input-group-text ">
                         Work Position :
                     </label>
                 </div>
-                <input ng-model="data.work_position" id="work_position" name="work_position" class="form-control"
+                <input ng-model="data.work_position" id="work_position" name="work_position" class="form-control bg-white"
                     type="text" placeholder="Eg : Software Developer" ng-disabled="tag_disabled">
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label class="input-group-text">Skills : </label>
+                    <label class="input-group-text ">Skills : </label>
                 </div>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button" ng-click="inc('skills')"
@@ -123,10 +123,10 @@
                 <div class="input-group form-group col-lg-6 flex-nowrap"
                     ng-repeat="skill in data.skills track by $index">
                     <div class="input-group-prepend">
-                        <label for="skill-{{$index}}" class="input-group-text">{{$index+1}}</label>
+                        <label for="skill-{{$index}}" class="input-group-text ">{{$index+1}}</label>
                     </div>
                     <input ng-model="data.skills[$index]" name="skills[]" id="skill-{{$index}}" type="text"
-                        ng-disabled="tag_disabled" placeholder="Eg : c++">
+                        ng-disabled="tag_disabled" placeholder="Eg : c++" class="form-control bg-white">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" ng-click="dec('skills',$index)"
                             ng-disabled="tag_disabled">-</button>
@@ -135,7 +135,7 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="hobbies" class="input-group-text">Hobbies : </label>
+                    <label for="hobbies" class="input-group-text ">Hobbies : </label>
                 </div>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button" ng-click="inc('hobbies')"
@@ -146,10 +146,10 @@
                 <div class="input-group form-group col-lg-6 flex-nowrap"
                     ng-repeat="hobbie in data.hobbies track by $index">
                     <div class="input-group-prepend">
-                        <label for="hobbie-{{$index}}" class="input-group-text">{{$index+1}}</label>
+                        <label for="hobbie-{{$index}}" class="input-group-text ">{{$index+1}}</label>
                     </div>
                     <input ng-model="data.hobbies[$index]" name="hobbies" id="hobbie-{{$index}}" type="text"
-                        ng-disabled="tag_disabled" placeholder="Eg : Gardening">
+                        ng-disabled="tag_disabled" placeholder="Eg : Gardening" class="form-control bg-white">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" ng-click="dec('hobbies',$index)"
                             ng-disabled="tag_disabled">-</button>
@@ -158,7 +158,7 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="extra_curricular_activities" class="input-group-text">Extra Curricular
+                    <label for="extra_curricular_activities" class="input-group-text ">Extra Curricular
                         Activities : </label>
                 </div>
                 <div class="input-group-append">
@@ -170,11 +170,11 @@
                 <div class="input-group form-group col-lg-6 flex-nowrap"
                     ng-repeat="extra_curricular_activity in data.extra_curricular_activities track by $index">
                     <div class="input-group-prepend">
-                        <label for="extra_curricular_activity-{{$index}}" class="input-group-text">{{$index+1}}</label>
+                        <label for="extra_curricular_activity-{{$index}}" class="input-group-text ">{{$index+1}}</label>
                     </div>
                     <input ng-model="data.extra_curricular_activities[$index]" name="extra_curricular_activity"
                         id="extra_curricular_activity-{{$index}}" type="text" ng-disabled="tag_disabled"
-                        placeholder="Eg : Rotract club member">
+                        placeholder="Eg : Rotract club member" class="form-control bg-white">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button"
                             ng-click="dec('extra_curricular_activities',$index)" ng-disabled="tag_disabled">-</button>
@@ -183,7 +183,7 @@
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
-                    <label for="extra_curricular_activities" class="input-group-text">Knowledges : </label>
+                    <label for="extra_curricular_activities" class="input-group-text ">Knowledges : </label>
                 </div>
                 <div class="input-group-append">
                     <button class="btn btn-secondary" type="button" ng-click="inc('knowledges')"
@@ -194,10 +194,10 @@
                 <div class="input-group form-group col-lg-6 flex-nowrap"
                     ng-repeat="knowledge in data.knowledges track by $index">
                     <div class="input-group-prepend">
-                        <label for="knowledge-{{$index}}" class="input-group-text">{{$index+1}}</label>
+                        <label for="knowledge-{{$index}}" class="input-group-text ">{{$index+1}}</label>
                     </div>
                     <input ng-model="data.knowledges[$index]" name="knowledge" id="knowledge-{{$index}}" type="text"
-                        ng-disabled="tag_disabled" placeholder="Eg : Gardening">
+                        ng-disabled="tag_disabled" placeholder="Eg : Gardening" class="form-control bg-white">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" type="button" ng-click="dec('knowledges',$index)"
                             ng-disabled="tag_disabled">-</button>

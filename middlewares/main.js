@@ -102,7 +102,7 @@ module.exports.updateProfile = function (req, res, next) {
             code: 1,
             message: 'Invalid DOB'
         };
-    } else if (!data.work_experience && !validator.isNumeric(`${data.work_experience}`)) {
+    } else if (data.work_experience && !validator.isNumeric(`${data.work_experience}`)) {
         resp = {
             code: 1,
             message: 'Invalid Work Experience'

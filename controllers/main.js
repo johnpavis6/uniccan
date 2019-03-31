@@ -2,24 +2,6 @@ var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var connection = require('../db').connection;
 
-module.exports.home = function (req, res) {
-    connection.query('select skills from users', function (err, results) {
-        var skills = new Set();
-        results.forEach(result => {
-            let ts = JSON.parse(result.skills || '[]');
-            ts.forEach(t => {
-                skills.add(t);
-            });
-        });
-        skills = Array.from(skills);
-        console.log(skills);
-        res.render('home', {
-            user: req.session.user || {},
-            skills: skills
-        });
-    });
-}
-
 module.exports.signin = function (req, res) {
     connection.query('select * from users where email=?',
         [req.data.email],
@@ -98,7 +80,7 @@ module.exports.search = function (req, res) {
         res.json([]);
         return;
     }
-    var query = `select * from users where skills like '%${q}%'`;
+    var query = `select * from users where name like '%${q}%' or college_name like '%${q}%' or work_company_name like '%${q}%' or skills like '%${q}%' or hobbies like '%${q}%' or extra_curricular_activities like '%${q}%' or knowledges like '%${q}%'`;
     connection.query(query, function (err, results) {
         if (err) {
             console.log('ERR : ', err);

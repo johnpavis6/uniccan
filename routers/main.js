@@ -3,7 +3,11 @@ var app = express.Router();
 var controller = require('../controllers/main');
 var middleware = require('../middlewares/main');
 
-app.get('/', controller.home);
+app.get('/', function (req, res) {
+    res.render('home', {
+        user: req.session.user || {},
+    });
+});
 app.get('/signin', function (req, res) {
     var resp = req.session.resp;
     req.session.resp = null;
