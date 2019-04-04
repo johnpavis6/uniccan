@@ -1,4 +1,4 @@
-var xss = require('xss');
+var xss = require('xss').escapeHtml;
 var validator = require('validator');
 module.exports.signin = function (req, res, next) {
     var data = {
