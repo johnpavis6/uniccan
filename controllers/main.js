@@ -80,7 +80,7 @@ module.exports.search = function (req, res) {
         res.json([]);
         return;
     }
-    var query = `select * from users where name like '%${q}%' or college_name like '%${q}%' or work_company_name like '%${q}%' or skills like '%${q}%' or hobbies like '%${q}%' or extra_curricular_activities like '%${q}%' or knowledges like '%${q}%'`;
+    var query = `select * from users where name like '%${q}%' or college_name like '%${q}%' or work_experiences like '%${q}%' or skills like '%${q}%' or hobbies like '%${q}%' or extra_curricular_activities like '%${q}%' or knowledges like '%${q}%'`;
     connection.query(query, function (err, results) {
         if (err) {
             console.log('ERR : ', err);
