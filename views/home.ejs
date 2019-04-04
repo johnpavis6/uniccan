@@ -23,7 +23,7 @@
         <form ng-submit="search()">
             <div class="input-group search-group">
                 <input class="search-box form-control" type="text" name="q" autocomplete="off" list="suggestions"
-                    placeholder="search by name, college, company, skills, hobbies, knowledges..." ng-model="q">
+                    placeholder="Search by Name, College, Company, Skills, Hobbies, Knowledges..." ng-model="q">
                 <datalist id="suggestions">
                     <option ng-repeat="suggestion in suggestions">{{suggestion}}</option>
                 </datalist>
