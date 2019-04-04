@@ -42,6 +42,10 @@ create table users(
 );
 alter table users add column knowledges text;
 alter table users add column college_name text;
+alter table users drop column work_experience;
+alter table users drop column work_company_name;
+alter table users drop column work_position;
+alter table users add column work_experiences text;
 
 delete from socket_mapping;
 update users set last_seen=CURRENT_TIMESTAMP() where last_seen="online";

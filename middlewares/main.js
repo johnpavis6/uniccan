@@ -82,13 +82,11 @@ module.exports.updateProfile = function (req, res, next) {
         dob: req.body.dob,
         education: xss(req.body.education),
         college_name: xss(req.body.college_name),
-        work_experience: req.body.work_experience,
-        work_company_name: xss(req.body.work_company_name),
-        work_position: xss(req.body.work_position),
-        skills: xss(JSON.stringify(req.body.skills || [])),
-        hobbies: xss(JSON.stringify(req.body.hobbies || [])),
-        extra_curricular_activities: xss(JSON.stringify(req.body.extra_curricular_activities || [])),
-        knowledges: xss(JSON.stringify(req.body.knowledges || [])),
+        work_experiences: xss(JSON.stringify(req.body.work_experiences)),
+        skills: xss(req.body.skills),
+        hobbies: xss(req.body.hobbies),
+        extra_curricular_activities: xss(req.body.extra_curricular_activities),
+        knowledges: xss(req.body.knowledges),
     }
     console.log(data);
     var resp = null;
@@ -101,11 +99,6 @@ module.exports.updateProfile = function (req, res, next) {
         resp = {
             code: 1,
             message: 'Invalid DOB'
-        };
-    } else if (data.work_experience && !validator.isNumeric(`${data.work_experience}`)) {
-        resp = {
-            code: 1,
-            message: 'Invalid Work Experience'
         };
     }
     if (resp) {
