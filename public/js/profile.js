@@ -10,6 +10,7 @@ app.controller('profileCtrl', function ($scope, $http) {
         $scope.data.dob = new Date($('meta[name="user-dob"]').attr('content'));
         $scope.data.education = $('meta[name="user-education"]').attr('content');
         $scope.data.college_name = $('meta[name="user-college_name"]').attr('content');
+        $scope.data.degrees = $('meta[name="user-degrees"]').attr('content');
         $scope.data.work_experiences = JSON.parse($('meta[name="user-work_experiences"]').attr('content') || '[]');
         $scope.data.skills = $('meta[name="user-skills"]').attr('content');
         $scope.data.hobbies = $('meta[name="user-hobbies"]').attr('content');

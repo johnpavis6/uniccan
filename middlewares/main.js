@@ -82,6 +82,7 @@ module.exports.updateProfile = function (req, res, next) {
         dob: req.body.dob,
         education: xss(req.body.education),
         college_name: xss(req.body.college_name),
+        degrees: xss(req.body.degrees),
         work_experiences: xss(JSON.stringify(req.body.work_experiences)),
         skills: xss(req.body.skills),
         hobbies: xss(req.body.hobbies),
