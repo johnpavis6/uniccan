@@ -1,0 +1,69 @@
+<html>
+
+<head>
+    <title>Uniccan - Admin - Signin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="/css/signin.css"> -->
+    <% for(key in users){ %>
+    <meta name="users-<%= key %>" content="<%= users[key] %>">
+    <% } %>
+</head>
+
+<body style="background-image: url(/images/bg.jpeg);background-size: 100% 100%;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/#">
+            <img src="/images/logo.png" width="30" height="30">
+            Uniccan
+        </a>
+        <a class="btn btn-outline-success" href="/admin/logout">Log out</a>
+    </nav>
+    <div class="container">
+        <table class="table table-hover table-bordered table-responsive">
+            <thead class="table-success ">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Mobile No</th>
+                    <th>DOB</th>
+                    <th>Education</th>
+                    <th>Hobbies</th>
+                    <th>Extra curricular activities</th>
+                    <th>Involvements</th>
+                    <th>Skills</th>
+                    <th>Last seen</th>
+                    <th>Knowledges</th>
+                    <th>College name</th>
+                    <th>Work experiences</th>
+                    <th>Degrees</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for(var i=0; i < users.length; i++) { %>
+                <tr>
+                    <th><%= users[i].name %></th>
+                    <th><%= users[i].email %></th>
+                    <th><%= users[i].gender %></th>
+                    <th><%= users[i].mobile_no %></th>
+                    <th><%= users[i].dob %></th>
+                    <th><%= users[i].education %></th>
+                    <th><%= users[i].hobbies %></th>
+                    <th><%= users[i].extra_curricular_activities %></th>
+                    <th><%= users[i].involvements %></th>
+                    <th><%= users[i].skills %></th>
+                    <th><%= users[i].last_seen %></th>
+                    <th><%= users[i].knowledges %></th>
+                    <th><%= users[i].college_name %></th>
+                    <th><%= users[i].work_experiences %></th>
+                    <th><%= users[i].degrees %></th>
+                </tr>
+                <% } %>
+        </table>
+    </div>
+</body>
+
+</html>

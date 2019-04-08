@@ -26,6 +26,7 @@ app.use(express.static('./node_modules/angular/'))
 app.use(express.static('./public/'))
 
 app.use('/', require('./routers/main'));
+app.use('/admin', require('./routers/admin'));
 
 http.listen(8888, function (err) {
     if (err) { throw err; }
