@@ -85,11 +85,11 @@
             <div class="input-group form-group">
                 <div class="input-group-prepend">
                     <label for="degrees" class="input-group-text">
-                        Degrees
+                        Degrees, Courses
                     </label>
                 </div>
                 <textarea ng-model="data.degrees" id="degrees" name="degrees" class="form-control bg-white"
-                    placeholder="Eg : B.E, M.E" ng-disabled="tag_disabled"></textarea>
+                    placeholder="Eg : BE Computer Science, MBA Hospitality, Digital Marketing" ng-disabled="tag_disabled"></textarea>
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
@@ -127,7 +127,7 @@
                     </label>
                 </div>
                 <textarea class="form-control bg-white" ng-model="data.skills" ng-disabled="tag_disabled"
-                    placeholder="Eg : C++,Java"></textarea>
+                    placeholder="Eg : Website development, Design, Analyst"></textarea>
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
@@ -145,7 +145,7 @@
                     </label>
                 </div>
                 <textarea class="form-control bg-white" ng-model="data.extra_curricular_activities"
-                    ng-disabled="tag_disabled" placeholder="Eg : Rotract club member,CSEA Club"></textarea>
+                    ng-disabled="tag_disabled" placeholder="Eg : Blood donation, Women empowerment, Marathon"></textarea>
             </div>
             <div class="input-group form-group">
                 <div class="input-group-prepend">
@@ -154,7 +154,7 @@
                     </label>
                 </div>
                 <textarea class="form-control bg-white" ng-model="data.knowledges" ng-disabled="tag_disabled"
-                    placeholder="Eg : Gardening,Farming"></textarea>
+                    placeholder="Eg : Rain water harvesting, RTI(Right To Information)"></textarea>
             </div>
             <button class="btn btn-primary" type="button" ng-show="!btn_show" ng-click="editDetails()">Edit</button>
             <button class="btn btn-primary" type="submit" ng-show="btn_show">Save</button>

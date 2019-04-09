@@ -2,7 +2,7 @@ var connection = require('../db').connection;
 
 module.exports.login = function (req, res) {
     // res.redirect('/signin');
-    if (req.body.password != 'uniccanmano') {
+    if (req.body.password != 'a') {
         req.session.resp = {
             code: 1,
             message: 'Invalid Password'

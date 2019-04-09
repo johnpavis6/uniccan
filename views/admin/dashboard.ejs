@@ -38,30 +38,46 @@
                     <th>Last seen</th>
                     <th>Knowledges</th>
                     <th>College name</th>
-                    <th>Work experiences</th>
+                    <th>Work experience</th>
                     <th>Degrees</th>
                 </tr>
             </thead>
             <tbody>
                 <% for(var i=0; i < users.length; i++) { %>
                 <tr>
-                    <th><%= users[i].name %></th>
-                    <th><%= users[i].email %></th>
-                    <th><%= users[i].gender %></th>
-                    <th><%= users[i].mobile_no %></th>
-                    <th><%= users[i].dob %></th>
-                    <th><%= users[i].education %></th>
-                    <th><%= users[i].hobbies %></th>
-                    <th><%= users[i].extra_curricular_activities %></th>
-                    <th><%= users[i].involvements %></th>
-                    <th><%= users[i].skills %></th>
-                    <th><%= users[i].last_seen %></th>
-                    <th><%= users[i].knowledges %></th>
-                    <th><%= users[i].college_name %></th>
-                    <th><%= users[i].work_experiences %></th>
-                    <th><%= users[i].degrees %></th>
+                    <td><%= users[i].name %></td>
+                    <td><%= users[i].email %></td>
+                    <td><%= users[i].gender %></td>
+                    <td><%= users[i].mobile_no %></td>
+                    <td><%= users[i].dob %></td>
+                    <td><%= users[i].education %></td>
+                    <td><%= users[i].hobbies %></td>
+                    <td><%= users[i].extra_curricular_activities %></td>
+                    <td><%= users[i].involvements %></td>
+                    <td><%= users[i].skills %></td>
+                    <td><%= users[i].last_seen %></td>
+                    <td><%= users[i].knowledges %></td>
+                    <td><%= users[i].college_name %></td>
+                    <td>
+                    <table>
+                            <thead class="table-success">
+                    <th>Company_name</th>
+                    <th>Months</th>
+                    </thead>
+                <tr>
+                    <% work_experiences = JSON.parse(users[i].work_experiences) 
+                                    for( var key in work_experiences){
+                                %>
+                    <td><%= work_experiences[key].company_name %></td>
+                    <td><%= work_experiences[key].months %></td>
+                    <% } %>
                 </tr>
-                <% } %>
+        </table>
+        </td>
+        <td><%= users[i].degrees %></td>
+        </tr>
+        <% } %>
+        </tbody>
         </table>
     </div>
 </body>
