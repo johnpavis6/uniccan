@@ -50,3 +50,4 @@ alter table users add column degrees text;
 
 delete from socket_mapping;
 update users set last_seen=CURRENT_TIMESTAMP() where last_seen="online";
+alter table users add column forgot_password varchar(50);

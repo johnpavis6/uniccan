@@ -1,6 +1,8 @@
 var bcrypt = require('bcrypt');
 var saltRounds = 10;
 var connection = require('../db').connection;
+var shortid = require('shortid');
+var sendMail = require('../nodemailer').sendmail;
 
 module.exports.signin = function (req, res) {
     connection.query('select * from users where email=?',
@@ -51,6 +53,47 @@ module.exports.signup = function (req, res) {
             delete data['password'];
             req.session.user = data;
             res.redirect('/profile');
+        });
+}
+module.exports.forgotPassword = function (req, res) {
+    var forgot_password = shortid.generate();
+    var data = {};
+    var timeInMss = Date.now();
+    forgot_password += timeInMss;
+    data.forgot_password = forgot_password;
+    connection.query('update users set ? where email=?',
+        [data, req.data.email],
+        function (err, result) {
+            if (err) {
+                console.log('ERR : ', err);
+                res.status(400).json({
+                    code: 1,
+                    message: 'Update Error'
+                });
+                return;
+            }
+            var url = "https://uniccan.com/changePassword?id=" + forgot_password;
+            var html = `<a href='http://localhost:8888/changePassword?id=`+forgot_password+`'>click me to reset your password for uniccan</a>`;
+            sendMail(req.data.email, 'Link to reset your password', html);
+            res.redirect('/signin');
+        });
+}
+
+module.exports.changePassword = function (req, res) {
+    var data = {};
+    data.password = bcrypt.hashSync(req.data.password1, saltRounds);
+    connection.query('update users set ? where forgot_password=?',
+        [data, req.data.forgot_id],
+        function (err, result) {
+            if (err) {
+                console.log('ERR : ', err);
+                res.status(400).json({
+                    code: 1,
+                    message: 'Update Error'
+                });
+                return;
+            }
+            res.redirect('/signin');
         });
 }
 

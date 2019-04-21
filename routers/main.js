@@ -30,6 +30,25 @@ app.get('/signout', function (req, res) {
     req.session.user = null;
     res.redirect('/');
 });
+app.get('/forgotPassword', function (req, res) {
+    var resp = req.session.resp;
+    req.session.resp = null; 
+    res.render('forgot_password',{
+        resp : resp
+    });
+});
+app.post('/forgotPassword',middleware.forgotPassword, controller.forgotPassword);
+
+app.get('/changePassword', function (req, res) {
+    var resp = req.session.resp;
+    req.session.resp = null;
+    req.session.forgotId = req.query.id;
+    res.render('change_password',{
+        resp : resp
+    });
+});
+
+app.post('/changePassword',middleware.changePassword, controller.changePassword);
 
 app.get('/profile', middleware.isLoggedIn, function (req, res) {
     res.render('profile', {

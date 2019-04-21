@@ -74,6 +74,57 @@ module.exports.signup = function (req, res, next) {
     next()
 }
 
+module.exports.forgotPassword = function (req, res, next) {
+    var data = {
+        email: xss(req.body.email),
+    }
+    console.log(data);
+    var resp = null;
+    req.session.resp = null;
+
+    if (!data.email || !validator.isEmail(data.email)) {
+        resp = {
+            code: 1,
+            message: 'Invalid Email'
+        };
+    }
+    if (resp) {
+        req.session.resp = resp;
+        res.redirect('/forgotPassword');
+        return;
+    }
+    req.data = data;
+    next()
+}
+
+module.exports.changePassword = function (req, res, next) {
+    var data = {
+        forgot_id: req.session.forgotId,
+        password1: xss(req.body.password1),
+        password2: xss(req.body.password2),
+    }
+    var resp = null;
+    req.session.resp = null;
+    if (!data.password1 || data.password1.length < 8) {
+        resp = {
+            code: 1,
+            message: 'Password must be atleast 8 letters'
+        };
+    } else if (data.password1 != data.password2) {
+        resp = {
+            code: 1,
+            message: 'Password does not match'
+        };
+    }
+    if (resp) {
+        req.session.resp = resp;
+        res.redirect('/changePassword?id='+data.forgot_id);
+        return;
+    }
+    req.session.forgotId = null;
+    req.data = data;
+    next()
+}
 module.exports.updateProfile = function (req, res, next) {
     var data = {
         id: parseInt(req.body.id),
