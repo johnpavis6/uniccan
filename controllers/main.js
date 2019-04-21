@@ -73,7 +73,7 @@ module.exports.forgotPassword = function (req, res) {
                 return;
             }
             var url = "https://uniccan.com/changePassword?id=" + forgot_password;
-            var html = `<a href='http://localhost:8888/changePassword?id=`+forgot_password+`'>click me to reset your password for uniccan</a>`;
+            var html = `<a href='http://uniccan.com/changePassword?id=`+forgot_password+`'>click me to reset your password for uniccan</a>`;
             sendMail(req.data.email, 'Link to reset your password', html);
             res.redirect('/signin');
         });
