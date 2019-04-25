@@ -23,9 +23,11 @@
         <form ng-submit="search()">
             <div class="input-group search-group">
                 <input class="search-box form-control" type="text" name="q" autocomplete="off" list="suggestions"
-                    placeholder="Search by Name, College, Company, Skills, Hobbies, Knowledges..." ng-model="q">
+                    placeholder="Search by Name, College, Company, Skills, Hobbies, Knowledges..." ng-model="q" ng-keypress="getSuggestions()">
                 <datalist id="suggestions">
-                    <option ng-repeat="suggestion in suggestions">{{suggestion}}</option>
+                    <option ng-repeat="name in names track by $index">{{name.value}}</option>
+                    <option ng-repeat="work_exp in work_exps track by $index">{{work_exp}}</option>
+                    <option ng-repeat="other in others track by $index">{{other}}</option>
                 </datalist>
                 <div class="input-group-append search-btn">
                     <button class="btn btn-outline-secondary" type="submit"><i class="fas fa-search"

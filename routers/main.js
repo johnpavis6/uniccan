@@ -8,6 +8,10 @@ app.get('/', function (req, res) {
         user: req.session.user || {},
     });
 });
+app.get('/getSuggestionsName',controller.getSuggestionsName);
+app.get('/getSuggestionsWorkexp',controller.getSuggestionsWorkexp);
+app.get('/getSuggestionsOthers',controller.getSuggestionsOthers);
+
 app.get('/signin', function (req, res) {
     var resp = req.session.resp;
     req.session.resp = null;

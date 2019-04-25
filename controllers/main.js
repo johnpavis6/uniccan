@@ -73,7 +73,7 @@ module.exports.forgotPassword = function (req, res) {
                 return;
             }
             var url = "https://uniccan.com/changePassword?id=" + forgot_password;
-            var html = `<a href='http://uniccan.com/changePassword?id=`+forgot_password+`'>click me to reset your password for uniccan</a>`;
+            var html = `<a href='http://uniccan.com/changePassword?id=` + forgot_password + `'>click me to reset your password for uniccan</a>`;
             sendMail(req.data.email, 'Link to reset your password', html);
             res.redirect('/signin');
         });
@@ -131,6 +131,41 @@ module.exports.search = function (req, res) {
         res.json(results);
     });
 }
+
+module.exports.getSuggestionsName = function (req, res) {
+    query = `select name as value from users`;
+    connection.query(query, function (err, results) {
+        if (err) {
+            console.log('ERR : ', err);
+        }
+        res.json(results);
+    });
+}
+
+module.exports.getSuggestionsWorkexp = function (req, res) {
+    query = `select work_experiences as value from users`;
+    connection.query(query, function (err, results) {
+        if (err) {
+            console.log('ERR : ', err);
+        }
+        res.json(results);
+    });
+}
+
+module.exports.getSuggestionsOthers = function (req, res) {
+    query = `select education as value from users 
+    union select hobbies from users union select extra_curricular_activities from users 
+    union select involvements from users union select skills from users 
+    union select knowledges from users union select college_name from users 
+    union select degrees from users`;
+    connection.query(query, function (err, results) {
+        if (err) {
+            console.log('ERR : ', err);
+        }
+        res.json(results);
+    });
+}
+
 
 module.exports.mynotifications = function (req, res) {
     connection.query('select name,_from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 and _to=? group by _from',
