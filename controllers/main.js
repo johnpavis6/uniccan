@@ -168,7 +168,7 @@ module.exports.getSuggestionsOthers = function (req, res) {
 
 
 module.exports.mynotifications = function (req, res) {
-    connection.query('select name,_from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 and _to=? group by _from',
+    connection.query('select name,b.id as _from,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 and _to=? group by _from',
         [req.session.user.email],
         function (err, results) {
             if (err) {
@@ -180,18 +180,19 @@ module.exports.mynotifications = function (req, res) {
 }
 module.exports.mychats = function (req, res) {
     var email = req.session.user.email;
-    connection.query('select distinct _from as email,name from messages as a,users as b where email=_from and _to=? union select distinct _to as email,name from messages as a,users as b where email=_to and _from=?;',
+    connection.query('select id as email,name from users where email in (select distinct _from as email from messages as a, users as b where email=_from and _to=? union select distinct _to as email from messages as a, users as b where email=_to and _from=?)',
         [email, email],
         function (err, results) {
             if (err) {
                 console.log(err);
             }
+            console.log(results);
             res.json(results);
         })
 }
 
 module.exports.chat = function (req, res) {
-    connection.query('select * from users where email=?',
+    connection.query('select * from users where id=?',
         [req.query.email],
         function (err, results) {
             if (err) {
