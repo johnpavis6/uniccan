@@ -76,8 +76,8 @@ app.get('/notifications', middleware.isLoggedIn, function (req, res) {
 app.get('/mychats', middleware.isLoggedIn, controller.mychats);
 app.get('/mynotifications', middleware.isLoggedIn, controller.mynotifications);
 
-app.get('/chat', middleware.isLoggedIn, function (req, res, next) {
-    if (req.query.email == req.session.user.email) {
+app.get('/chat/:id', middleware.isLoggedIn, function (req, res, next) {
+    if (req.params.id == req.session.user.id) {
         res.redirect('/');
         return;
     }

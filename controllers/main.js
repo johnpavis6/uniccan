@@ -193,7 +193,7 @@ module.exports.mychats = function (req, res) {
 
 module.exports.chat = function (req, res) {
     connection.query('select * from users where id=?',
-        [req.query.email],
+        [req.params.id],
         function (err, results) {
             if (err) {
                 console.log('ERR : ', err);
@@ -206,14 +206,14 @@ module.exports.chat = function (req, res) {
                 user: req.session.user,
                 receiver: results[0]
             });
+            connection.query('update messages users set seenstatus=1 where _from=? and _to=?',
+                [results[0].email, req.session.user.email],
+                (err, results) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                });
         });
-    connection.query('update messages users set seenstatus=1 where _from=? and _to=?',
-        [req.query.email, req.session.user.email],
-        (err, results) => {
-            if (err) {
-                console.log(err);
-            }
-        })
 }
 
 module.exports.setSocketID = function (req, res) {

@@ -24,7 +24,7 @@
             <div class="alert text-center alert-secondary">New Chats</div>
         </div>
         <div class="card-deck">
-            <a ng-repeat="user in notifications" href="/chat?email={{user._from}}" class="nav-link">
+            <a ng-repeat="user in notifications" href="/chat/{{user._from}}" class="nav-link">
                 <div class="card border-primary">
                     <div class="card-header border-primary">
                         <div class="card-title">Name : {{user.name}}</div>
@@ -39,7 +39,7 @@
             <div class="alert text-center alert-secondary">Recent Chats</div>
         </div>
         <div class="card-deck">
-            <a ng-repeat="user in chats" href="/chat?email={{user.email}}" class="nav-link">
+            <a ng-repeat="user in chats" href="/chat/{{user.email}}" class="nav-link">
                 <div class="card border-primary">
                     <div class="card-header border-primary">
                         <div class="card-title">Name : {{user.name}}</div>
