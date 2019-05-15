@@ -3,8 +3,8 @@ var transporter = nodemailer.createTransport({
     service: 'Gmail',
     port: 587,
     auth: {
-        user: 'johnpavis30@gmail.com',
-        pass: 'Iampavis_6'
+        user: 'beuniccan@gmail.com',
+        pass: 'unique001'
     }
 });
 console.log('Mail Server connection requested');

@@ -35,7 +35,7 @@ addMessage = function (data) {
                 <div class="input-group-text text-left">
                     ${data.message}
                     <br>
-                    <div class="text-muted small">${h}:${m} ${mm}</div>
+                    <div class="text-muted small text-nowrap">${h}:${m} ${mm}</div>
                 </div>
             </div>`;
     $('#messages').append(html);
