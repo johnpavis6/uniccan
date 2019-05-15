@@ -274,7 +274,24 @@ module.exports.insertMessage = function (req, res) {
             });
             results.forEach(user => {
                 io.to(user.socketID).emit('messages', JSON.stringify(req.data));
-            })
+            });
+            connection.query("select name,b.id as id,count(*) as count from messages as a,users as b where email=_from and seenstatus=0 and _to=? group by _from",
+                [req.body._to],
+                (err, results) => {
+                    results.forEach(user => {
+                        sendMail(req.body._to, "New Message Alert", `
+                        <div>
+                            <a src="https://uniccan.com">
+                                <img src="https://uniccan.com/images/logo.png">
+                            </a>
+                            <hr>
+                            <div>You have ${user.count} new messages from ${user.name}</div>
+                            <hr>
+                            <a href="https://uniccan.com/chat/${user.id}">Click here to chat with ${user.name}</a>
+                       </div>
+                    `);
+                    });
+                });
         })
 }
 io.on('connection', (socket) => {
